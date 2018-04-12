@@ -41,6 +41,7 @@ int main(int argc, char* argv[]){
 	if(tmp = strstr(filecontent, TAGSQL)!=NULL){
 		//prende il nome del db
 		char* dbName = getDbName(tmp);
+		char* sqlQuery = getQuery(tmp);
 		//connetti al db
 		sqlite3* db;
 		int rc;
@@ -117,4 +118,9 @@ char* concat(char* first_string,char* second_string) {
 	for(;*tmp = *second_string; tmp++, second_string++) { }
 
 	return ret;
+}
+
+
+char* getQuery(char* ){
+	
 }
