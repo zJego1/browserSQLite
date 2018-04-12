@@ -6,6 +6,12 @@
 #define RQST_CTRL "GET "
 #define TAGSQL "<sql"
 
+char* getFileName(char* request);
+char* getFileContent(char* filename);
+char* compileResponse(char* filecontent, char* tmp);
+char* getDbName(char* filecontent);
+
+
 int main(int argc, char* argv[]){
 	if(argc!=3){
 		printf("USAGE: %s PORT ROOT", argv[0]);
@@ -28,20 +34,21 @@ int main(int argc, char* argv[]){
 	char* tmp;
 	
 	if(tmp = strstr(filecontent, TAGSQL)!=NULL){
+		//prende il nome del db
+		char* dbName = getDbName(tmp);
 		//connetti al db
+		sqlite3* db;
+		int rc;
+		
+		rc = sqlite3_open(dbName ,&db);
 		//esegui query
+		
+		
 		//crea tabella A pointer to the first occurrence in str1 of the entire sequence of characters specified in str2, or a null pointer if the sequence is not present in str1.
 	}
 	
 	char* response = compileResponse(filecontent, tmp);
-	connection.invia(response);
-	
-
-
-	
-	
-	
-	
+	connection.invia(response);	
 	
 	
 	
@@ -83,5 +90,14 @@ char* getFileContent(char* filename){
 
 //compila la risposta da inviare al client
 char* compileResponse(char* filecontent, char* tmp){
+	char* ret;
 	
+	return ret;
+}
+
+//prende il nome del db presente nel tag sql
+char* getDbName(char* filecontent){
+	char* ret;
+	
+	return ret;
 }
