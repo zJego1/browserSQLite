@@ -55,11 +55,19 @@ int main(int argc, char* argv[]){
 
 //riceve la richiesta e restituisce il nome del file richiesto
 char* getFileName(char* request){
-	char* ret;
-	
+	char* ret[MAX_STR];
+	request+=4;
+	int i=0;
+	while(*request && *request!='\n'){
+		ret[i] = *request;
+		ret++;
+		i++;
+	}
+	ret[i]='\0';
 	return ret;
 }
 
+//inserisce il contenuto in un file in una stringa
 char* getFileContent(char* filename){
 	FILE *f = fopen(filename, "r");
 	fseek(f, 0, SEEK_END);
@@ -73,6 +81,7 @@ char* getFileContent(char* filename){
 	string[fsize] = '\0';
 }
 
+//compila la risposta da inviare al client
 char* compileResponse(char* filecontent, char* tmp){
 	
 }
