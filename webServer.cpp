@@ -10,16 +10,18 @@ char* getFileName(char* request);
 char* getFileContent(char* filename);
 char* compileResponse(char* filecontent, char* tmp);
 char* getDbName(char* filecontent);
-
+char* concat(char* first_string,char* second_string);
 
 int main(int argc, char* argv[]){
 	if(argc!=3){
 		printf("USAGE: %s PORT ROOT", argv[0]);
 		return -1;
 	}
+	//prende porta e root del file
 	int port = atoi(argv[1]);
 	char* root = argv[2];
 	
+	//apre un socket TCP, si mette in ascolto per ricevere una request
 	ServerTCP myself(port, true);
 	Connection* connection = myself.accetta();
 	char* rqst = connection.ricevi();
@@ -29,10 +31,13 @@ int main(int argc, char* argv[]){
 		return -2;
 	}
 	
+	//trova il filename nella richiesta, lo unisce al root
+	//e ne prende il contenuto
 	char* filename = getFileName(rqst);
-	char* filecontent = getFileContent(filename);
-	char* tmp;
+	char* filepath = concat(root, filename);
+	char* filecontent = getFileContent(filepath);
 	
+	char* tmp;
 	if(tmp = strstr(filecontent, TAGSQL)!=NULL){
 		//prende il nome del db
 		char* dbName = getDbName(tmp);
@@ -44,7 +49,7 @@ int main(int argc, char* argv[]){
 		//esegui query
 		
 		
-		//crea tabella A pointer to the first occurrence in str1 of the entire sequence of characters specified in str2, or a null pointer if the sequence is not present in str1.
+		//crea tabella
 	}
 	
 	char* response = compileResponse(filecontent, tmp);
@@ -53,9 +58,10 @@ int main(int argc, char* argv[]){
 	
 	
 	
-	
+	//fri
 	free(filecontent);
 	free(filename);
+	//ttata
 	delete(connection);
 	delete(myself);
 }
@@ -99,5 +105,16 @@ char* compileResponse(char* filecontent, char* tmp){
 char* getDbName(char* filecontent){
 	char* ret;
 	
+	return ret;
+}
+
+//concatena due stringhe
+char* concat(char* first_string,char* second_string) {
+	char* ret=(char*)malloc(strlen(first_string)+strlen(second_string)+1);
+	char* tmp = ret;
+
+	for(;*tmp = *first_string; tmp++, first_string++) { }
+	for(;*tmp = *second_string; tmp++, second_string++) { }
+
 	return ret;
 }
