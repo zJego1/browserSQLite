@@ -42,15 +42,23 @@ int main(int argc, char* argv[]){
 		//prende il nome del db
 		char* dbName = getDbName(tmp);
 		char* sqlQuery = getQuery(tmp);
+		char* query = "SELECT * FROM 5AINF"
+		char* err = NULL;
 		//connetti al db
 		sqlite3* db;
 		int rc;
 		
 		rc = sqlite3_open(dbName ,&db);
+		if(rc){
+			printf("ERROR: sqlite3_open()\n");
+			return -3;
+		}
 		//esegui query
-		
+		sqlite3_exec(db, query, NULL, NULL, &err);
 		
 		//crea tabella
+
+		sqlite3_close(db);
 	}
 	
 	char* response = compileResponse(filecontent, tmp);
